@@ -72,7 +72,7 @@ function watch(req, res) {
     }
 
     // Assume the bundle has changed when any javascript file changes.
-    if (filename.indexOf('.js') > 0) {
+    if (path.extname(filename) == '.js') {
       filename = 'index.js';
     }
 
