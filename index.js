@@ -15,6 +15,10 @@ function file(req, res) {
           res.write('500');
           res.end();
         }
+
+        res.writeHead(200);
+        res.write(buffer);
+        res.end();
       });
     } else {
       res.writeHead(404);
