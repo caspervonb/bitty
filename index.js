@@ -4,9 +4,11 @@ var http = require('http');
 var fs = require('fs');
 var child = require('child_process');
 var util = require('util');
+var path = require('path');
 
 function file(req, res) {
-  var filepath = req.url;
+  var filepath = path.join(process.cwd(), req.url);
+
   fs.exists(filepath, function(exists) {
     if (exists) {
       fs.readFile(filepath, function(error, buffer) {
