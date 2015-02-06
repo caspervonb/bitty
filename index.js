@@ -10,7 +10,7 @@ function file(req, res) {
   fs.exists(filepath, function(exists) {
     if (exists) {
       fs.readFile(filepath, function(error, buffer) {
-        if (err) {
+        if (error) {
           res.writeHead(500);
           res.write('500');
           res.end();
