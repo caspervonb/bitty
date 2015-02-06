@@ -5,6 +5,7 @@ var fs = require('fs');
 var child = require('child_process');
 var util = require('util');
 var path = require('path');
+var chokidar = require('chokidar');
 
 function file(req, res) {
   var filepath = path.join(process.cwd(), req.url);
@@ -85,9 +86,7 @@ function watch(req, res) {
   });
 }
 
-var watcher = fs.watch('.', {
-  recursive: true,
-});
+var watcher = chokidar.watch('.');
 
 watcher.on('change', function(event, filename) {
   console.log(event, filename);

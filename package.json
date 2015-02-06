@@ -13,5 +13,8 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Casper Beyer <caspervonb@qup.io>",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "chokidar": "^1.0.0-rc3"
+  }
 }
