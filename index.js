@@ -8,9 +8,9 @@ var path = require('path');
 var chokidar = require('chokidar');
 var program = require('commander');
 
-program.option('-C, --directory <path>', '', 'string', process.cwd());
-program.option('-W, --watch <glob>', '', '', 'string', '**/*');
-program.option('-p, --port <number>', '', '', 'number', 4000);
+program.option('-C, --directory <path>', 'change the working directory', process.cwd());
+program.option('-W, --watch <glob>', 'glob pattern of files to watch', '*/**');
+program.option('-p, --port <number>', 'specify the port', 4000);
 
 var pkg = require('./package.json');
 program.version(pkg.version);
