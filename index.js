@@ -8,6 +8,7 @@ var path = require('path');
 var chokidar = require('chokidar');
 var program = require('commander');
 
+program.option('-C, --directory <path>', String, process.cwd());
 program.option('-W, --watch <glob>', String, '**/*');
 
 var pkg = require('./package.json');
@@ -15,7 +16,7 @@ program.version(pkg.version);
 program.parse(process.argv);
 
 function file(req, res) {
-  var filepath = path.join(process.cwd(), req.url);
+  var filepath = path.join(program.directory, req.url);
 
   fs.exists(filepath, function(exists) {
     if (exists) {
