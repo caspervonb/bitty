@@ -6,6 +6,13 @@ var child = require('child_process');
 var util = require('util');
 var path = require('path');
 var chokidar = require('chokidar');
+var program = require('commander');
+
+program.option('-W, --watch <glob>', String, '**/*');
+
+var pkg = require('./package.json');
+program.version(pkg.version);
+program.parse(process.argv);
 
 function file(req, res) {
   var filepath = path.join(process.cwd(), req.url);
@@ -86,7 +93,7 @@ function watch(req, res) {
   });
 }
 
-var watcher = chokidar.watch('.');
+var watcher = chokidar.watch(program.watch);
 
 watcher.on('change', function(event, filename) {
   console.log(event, filename);
