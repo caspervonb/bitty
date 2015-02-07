@@ -12,7 +12,13 @@ when these files change.
 
 ## Options
 -C, --directory
-:    Change the working directory
+:    change the working directory
 
 -W, --watch
-:    Watch pattern
+:    specify the file watcher glob pattern
+
+-B, --bundler
+:    specify the bundle command
+
+-p, --port
+:    specify the http port
