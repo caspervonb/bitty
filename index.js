@@ -10,6 +10,7 @@ var program = require('commander');
 
 program.option('-C, --directory <path>', 'change the working directory', process.cwd());
 program.option('-W, --watch <glob>', 'glob pattern of files to watch', '*/**');
+program.option('-b, --bundler <cmd>', 'specify the bundler', 'browserify');
 program.option('-p, --port <number>', 'specify the port', 4000);
 
 var pkg = require('./package.json');
@@ -18,13 +19,12 @@ program.version(pkg.version);
 var sub = process.argv.indexOf('--');
 if (index > -1) {
   program.parse(process.argv.slice(0, sub));
-  program.bundler = process.argv.slice(sub + 1);
+  program.bundler.concat(process.argv.slice(sub + 1));
 } else {
   program.parse(process.argv);
-  program.bundler = '';
 }
 
-program.files = program.args.join(' ');
+program.bundler = program.bundler.concat(' ', program.args.join(' '));
 
 function file(req, res) {
   var filepath = path.join(program.directory, req.url);
@@ -52,10 +52,9 @@ function file(req, res) {
 
 function bundle(req, res) {
   res.setHeader('content-type', 'text/javascript');
+  console.log(program.bundler);
 
-  var cmd = util.format('browserify %s %s', program.bundler, program.files);
-  console.log(cmd);
-  var bundler = child.exec(cmd, function(error, stdout, stderr) {
+  var bundler = child.exec(program.bundler, function(error, stdout, stderr) {
     if (error) {
       res.write(error.toString());
     }
