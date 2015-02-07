@@ -5,6 +5,10 @@
   "bin": {
     "bitty": "index.js"
   },
+  "keywords": [
+    "browserify",
+    "http-server"
+  ],
   "files": [
     "index.js"
   ],
