@@ -1,8 +1,10 @@
 # Bitty(1)
 
 ## Installation
-```npm install bitty -g```
-```npm install browserify -g```
+```
+npm install -g bitty
+npm install -g browserify
+```
 
 ## Synopsis
 ```bitty [OPTION]... FILE...```
