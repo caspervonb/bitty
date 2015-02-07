@@ -59,6 +59,10 @@ function bundle(req, res) {
       res.write(error.toString());
     }
 
+    if (stderr) {
+      console.error(stderr);
+    }
+
     res.end(stdout);
   });
 }
