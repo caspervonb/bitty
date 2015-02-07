@@ -74,7 +74,7 @@ function watch(req, res) {
   });
 
   res.write('\n');
-  var listener = function(event, filename) {
+  var listener = function(filename) {
     // Skip dot files
     if (filename[0] == '.') {
       return;
