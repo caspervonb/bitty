@@ -10,18 +10,21 @@ var program = require('commander');
 
 program.option('-C, --directory <path>', '', 'string', process.cwd());
 program.option('-W, --watch <glob>', '', '', 'string', '**/*');
-
-var args = process.argv.slice(2);
-var index = args.indexOf('--');
-
-if (index > -1) {
-  bundlerArgs = args.slice(index + 1);
-  args = args.slice(0, index);
-}
+program.option('-W, --watch <glob>', '', '', 'string', 'browserify');
 
 var pkg = require('./package.json');
 program.version(pkg.version);
-program.parse(args);
+
+var sub = process.argv.indexOf('--');
+if (index > -1) {
+  program.parse(process.argv.slice(0, sub));
+  program.bundler = process.argv.slice(sub + 1);
+} else {
+  program.parse(process.argv);
+  program.bundler = '';
+}
+
+program.files = program.args.join(' ');
 
 function file(req, res) {
   var filepath = path.join(program.directory, req.url);
@@ -50,8 +53,9 @@ function file(req, res) {
 function bundle(req, res) {
   res.setHeader('content-type', 'text/javascript');
 
-  var cmd = util.format('browserify', bundlerArgs.join(' '));
-  var bundler = child.exec(bundler, function(error, stdout, stderr) {
+  var cmd = util.format('browserify %s %s', program.bundler, program.files);
+  console.log(cmd);
+  var bundler = child.exec(cmd, function(error, stdout, stderr) {
     if (error) {
       res.write(error.toString());
     }
