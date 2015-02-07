@@ -10,7 +10,7 @@ var program = require('commander');
 
 program.option('-C, --directory <path>', '', 'string', process.cwd());
 program.option('-W, --watch <glob>', '', '', 'string', '**/*');
-program.option('-W, --watch <glob>', '', '', 'string', 'browserify');
+program.option('-p, --port <number>', '', '', 'number', 4000);
 
 var pkg = require('./package.json');
 program.version(pkg.version);
@@ -128,7 +128,7 @@ server.on('request', function(req, res) {
   }
 });
 
-server.listen(3000, function () {
+server.listen(program.port, function () {
   var address = server.address();
   console.log('serving on port %d', address.port);
 });
