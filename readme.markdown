@@ -1,7 +1,7 @@
 # Bitty(1)
 
 ## Synopsis
-```bitty [OPTION]... FILE...```
+```bitty [options] <entries> -- [bundler options]```
 
 ## Description
 Starts a local development server that serves all files in the working directory,

@@ -8,6 +8,7 @@ var path = require('path');
 var chokidar = require('chokidar');
 var program = require('commander');
 
+program.usage('[options] <entries> -- [bundler options]');
 program.option('-C, --directory <path>', 'change the working directory', process.cwd());
 program.option('-W, --watch <glob>', 'glob pattern of files to watch', '*/**');
 program.option('-b, --bundler <cmd>', 'specify the bundler', 'browserify');
