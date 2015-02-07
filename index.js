@@ -8,12 +8,20 @@ var path = require('path');
 var chokidar = require('chokidar');
 var program = require('commander');
 
-program.option('-C, --directory <path>', String, process.cwd());
-program.option('-W, --watch <glob>', String, '**/*');
+program.option('-C, --directory <path>', '', 'string', process.cwd());
+program.option('-W, --watch <glob>', '', '', 'string', '**/*');
+
+var args = process.argv.slice(2);
+var index = args.indexOf('--');
+
+if (index > -1) {
+  bundlerArgs = args.slice(index + 1);
+  args = args.slice(0, index);
+}
 
 var pkg = require('./package.json');
 program.version(pkg.version);
-program.parse(process.argv);
+program.parse(args);
 
 function file(req, res) {
   var filepath = path.join(program.directory, req.url);
@@ -42,9 +50,8 @@ function file(req, res) {
 function bundle(req, res) {
   res.setHeader('content-type', 'text/javascript');
 
-  var argv = process.argv.slice(2);
-  var cmd = util.format('browserify', argv.join(' '));
-  var bundler = child.exec(cmd, function(error, stdout, stderr) {
+  var cmd = util.format('browserify', bundlerArgs.join(' '));
+  var bundler = child.exec(bundler, function(error, stdout, stderr) {
     if (error) {
       res.write(error.toString());
     }
