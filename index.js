@@ -13,6 +13,7 @@ program.option('-C, --directory <path>', 'change the working directory', process
 program.option('-W, --watch <glob>', 'specify the file watcher glob pattern', '*/**');
 program.option('-b, --bundler <cmd>', 'specify the bundle command', 'browserify');
 program.option('-p, --port <port>', 'specify the http port', 4000);
+program.option('-h, --host <host>', 'specify the http hostname', undefined);
 
 var pkg = require('./package.json');
 program.version(pkg.version);
@@ -132,7 +133,7 @@ server.on('request', function(req, res) {
   }
 });
 
-server.listen(program.port, function () {
+server.listen(program.port, program.host, function () {
   var address = server.address();
-  console.log('serving on port %d', address.port);
+  console.log('serving on http://%s:%d', address.address, address.port);
 });

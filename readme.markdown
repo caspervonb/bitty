@@ -22,3 +22,6 @@ when these files change.
 
 -p, --port
 :    specify the http port
+
+-h, --host
+:    specify the http hostname
