@@ -12,7 +12,7 @@ program.usage('[options] <entries> -- [bundler options]');
 program.option('-C, --directory <path>', 'change the working directory', process.cwd());
 program.option('-W, --watch <glob>', 'specify the file watcher glob pattern', '*/**');
 program.option('-b, --bundler <cmd>', 'specify the bundle command', 'browserify');
-program.option('-p, --port <number>', 'specify the http port', 4000);
+program.option('-p, --port <port>', 'specify the http port', 4000);
 
 var pkg = require('./package.json');
 program.version(pkg.version);
