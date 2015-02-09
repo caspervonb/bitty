@@ -7,6 +7,7 @@ var util = require('util');
 var path = require('path');
 var chokidar = require('chokidar');
 var program = require('commander');
+var cri = require('chrome-remote-interface');
 
 program.usage('[options] <entries> -- [bundler options]');
 program.option('-C, --directory <path>', 'change the working directory', process.cwd());
@@ -15,6 +16,7 @@ program.option('-b, --bundler <cmd>', 'specify the bundle command', 'browserify'
 program.option('-p, --port <port>', 'specify the http port', 4000);
 program.option('-h, --host <host>', 'specify the http hostname', undefined);
 program.option('-o, --open <program>', 'specify the client program');
+program.option('-i, --inject', 'enable bundle injection');
 
 var pkg = require('./package.json');
 program.version(pkg.version);
@@ -146,3 +148,58 @@ server.listen(program.port, program.host, function () {
     });
   }
 });
+
+if (program.inject) {
+  var bundleId = undefined;
+
+  setTimeout(function() {
+    var client = cri(function(chrome) {
+      console.info('attached');
+
+
+      watcher.on('change', function injectBundle(filename) {
+        if (path.extname(filename) == '.js') {
+          var cmd = util.format('%s %s', program.bundler, program.args.join(' '));
+          child.exec(cmd, function(error, stdout, stderr) {
+            if (error) {
+              return console.error(stderr);
+            }
+
+            if (bundleId == undefined) {
+              console.log('buhu');
+            }
+
+            if (stdout) {
+              console.log(bundleId);
+              chrome.Debugger.setScriptSource({
+                scriptId: bundleId,
+                scriptSource: stdout,
+              }, function(error, response) {
+                if (error) {
+                  return console.log(response);
+                }
+
+                console.log('Recompilation and update succeeded.');
+              });
+            }
+          });
+        }
+      });
+
+      chrome.on('close', function() {
+        watcher.removeListener('change', injectBundle);
+      });
+
+      chrome.on('Debugger.scriptParsed', function(params) {
+        console.log(params);
+        if(params.url == 'http://0.0.0.0:4000/index.js') {
+          bundleId = params.scriptId;
+          console.log(bundleId);
+        }
+      });
+
+      chrome.Debugger.enable(function() {
+      });
+    });
+  }, 500);
+}
