@@ -27,4 +27,4 @@ when these files change.
 -h, --host
 :    specify the http hostname
 
-Any options following the seperator will be forwarded to the bundler.
+Any options following the seperator **--** will be forwarded to the bundler.
