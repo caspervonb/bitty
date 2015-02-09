@@ -1,6 +1,6 @@
 {
   "name": "bitty",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Tiny browserify server",
   "bin": {
     "bitty": "index.js"
