@@ -11,6 +11,9 @@ the default bundler is browserify but this is configurable.
 The server will also watch the files matching a pattern and emit server sent events
 when these files change.
 
+It can also inject the bundle in the client runtime, the client needs to be able to accept
+a remote debugging connection, for now only chrome is enabled and it wants port 9222.
+
 ## Options
 -C, --directory
 :    change the working directory
@@ -18,7 +21,7 @@ when these files change.
 -W, --watch
 :    specify the file watcher glob pattern
 
--B, --bundler
+-b, --bundler
 :    specify the bundle command
 
 -p, --port
@@ -26,5 +29,11 @@ when these files change.
 
 -h, --host
 :    specify the http hostname
+
+-o, --open
+:    specify a client program to open
+
+-i, --inject
+:    enable bundle injection on file changes
 
 Any options following the seperator **--** will be forwarded to the bundler.
