@@ -12,13 +12,13 @@ The server will also watch the files matching a pattern and emit server sent eve
 when these files change.
 
 ## Options
--C, --directory
+-d, --directory
 :    change the working directory
 
--W, --watch
+-d, --watch
 :    specify the file watcher glob pattern
 
--B, --bundler
+-b, --bundler
 :    specify the bundle command
 
 -p, --port

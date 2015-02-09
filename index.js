@@ -7,10 +7,11 @@ var util = require('util');
 var path = require('path');
 var chokidar = require('chokidar');
 var program = require('commander');
+var cri = require('chrome-remote-interface');
 
 program.usage('[options] <entries> -- [bundler options]');
-program.option('-C, --directory <path>', 'change the working directory', process.cwd());
-program.option('-W, --watch <glob>', 'specify the file watcher glob pattern', '*/**');
+program.option('-d, --directory <path>', 'change the working directory', process.cwd());
+program.option('-w, --watch <glob>', 'specify the file watcher glob pattern', '.');
 program.option('-b, --bundler <cmd>', 'specify the bundle command', 'browserify');
 program.option('-p, --port <port>', 'specify the http port', 4000);
 program.option('-h, --host <host>', 'specify the http hostname', undefined);
