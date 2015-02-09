@@ -14,6 +14,7 @@ program.option('-W, --watch <glob>', 'specify the file watcher glob pattern', '*
 program.option('-b, --bundler <cmd>', 'specify the bundle command', 'browserify');
 program.option('-p, --port <port>', 'specify the http port', 4000);
 program.option('-h, --host <host>', 'specify the http hostname', undefined);
+program.option('-o, --open <program>', 'specify the client program');
 
 var pkg = require('./package.json');
 program.version(pkg.version);
@@ -136,4 +137,13 @@ server.on('request', function(req, res) {
 server.listen(program.port, program.host, function () {
   var address = server.address();
   console.log('serving on http://%s:%d', address.address, address.port);
+  if (program.open) {
+    var cmd = util.format('%s http://%s:%d', program.open, address.address, address.port);
+    console.log(cmd);
+    child.exec(cmd, function(error, stdout, stderr) {
+      if (error) {
+        return console.error(stderr);
+      }
+    });
+  }
 });
