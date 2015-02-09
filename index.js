@@ -27,8 +27,6 @@ if (index > -1) {
   program.parse(process.argv);
 }
 
-program.bundler = program.bundler.concat(' ', program.args.join(' '));
-
 function file(req, res) {
   var filepath = path.join(program.directory, req.url);
 
@@ -55,9 +53,10 @@ function file(req, res) {
 
 function bundle(req, res) {
   res.setHeader('content-type', 'text/javascript');
-  console.log(program.bundler);
+  var cmd = util.format('%s %s', program.bundler, program.args.join(' '));
+  console.log(cmd);
 
-  var bundler = child.exec(program.bundler, function(error, stdout, stderr) {
+  child.exec(cmd, function(error, stdout, stderr) {
     if (error) {
       res.write(error.toString());
     }
