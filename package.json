@@ -1,7 +1,7 @@
 {
   "name": "bitty",
   "version": "0.2.4",
-  "description": "Browserify development server with bundle injection",
+  "description": "Browserify live coding server",
   "bin": {
     "bitty": "index.js"
   },
