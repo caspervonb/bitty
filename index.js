@@ -152,11 +152,13 @@ server.listen(program.port, program.host, function () {
 if (program.inject) {
   var bundleId = undefined;
 
-  setTimeout(function() {
-    var client = cri(function(chrome) {
-      console.info('attached');
+  setTimeout(function connect() {
+    var client = cri();
+    client.on('error', function() {
+      setTimeout(connect, 500);
+    });
 
-
+    client.on('connect', function(chrome) {
       watcher.on('change', function injectBundle(filename) {
         if (path.extname(filename) == '.js') {
           var cmd = util.format('%s %s', program.bundler, program.args.join(' '));
