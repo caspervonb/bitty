@@ -193,10 +193,8 @@ if (program.inject) {
       });
 
       chrome.on('Debugger.scriptParsed', function(params) {
-        console.log(params);
         if(params.url == 'http://0.0.0.0:4000/index.js') {
           bundleId = params.scriptId;
-          console.log(bundleId);
         }
       });
 
