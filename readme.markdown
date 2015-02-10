@@ -12,7 +12,7 @@ The server will also watch the files matching a pattern and emit server sent eve
 when these files change.
 
 It can also inject the bundle in the client runtime, the client needs to be able to accept
-a remote debugging connection, for now only chrome is enabled and it wants port 9222.
+a remote debugging connection on port 9222.
 
 ## Options
 -C, --directory
@@ -37,3 +37,6 @@ a remote debugging connection, for now only chrome is enabled and it wants port 
 :    enable bundle injection on file changes
 
 Any options following the seperator **--** will be forwarded to the bundler.
+
+## Examples
+```sh bitty --directory assets --open 'google-chrome --remote-debugging-port 9292' --inject -- -t 6to5ify```
