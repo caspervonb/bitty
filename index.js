@@ -114,10 +114,6 @@ function watch(req, res) {
 
 var watcher = chokidar.watch(program.watch);
 
-watcher.on('change', function(event, filename) {
-  console.log(event, filename);
-});
-
 var server = http.createServer();
 server.on('request', function(req, res) {
   switch (req.url) {
