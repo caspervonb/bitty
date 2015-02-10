@@ -1,7 +1,7 @@
 {
   "name": "bitty",
   "version": "0.2.6",
-  "description": "Browserify live coding server",
+  "description": "Browserify live editing server",
   "bin": {
     "bitty": "index.js"
   },
